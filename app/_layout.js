@@ -1,37 +1,41 @@
 import { Stack } from "expo-router";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import ThemeToggle from "./components/ThemeToggle";
+import { StatusBar } from "expo-status-bar";
 
 function StackLayout() {
-  const { colors } = useTheme();
+  const { isDarkMode, toggleTheme, colors } = useTheme();
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.background,
-        },
-        headerTintColor: colors.text,
-        headerTitleStyle: {
-          color: colors.text,
-        },
-      }}
-    >
-      <Stack.Screen
-        name="index"
-        options={{
-          title: "Profile",
-          headerRight: () => <ThemeToggle />,
+    <>
+      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: colors.background,
+          },
+          headerTintColor: colors.text,
+          headerTitleStyle: {
+            color: colors.text,
+          },
         }}
-      />
-      <Stack.Screen
-        name="about"
-        options={{
-          title: "About",
-          headerRight: () => <ThemeToggle />,
-        }}
-      />
-    </Stack>
+      >
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Profile",
+            headerRight: () => <ThemeToggle />,
+          }}
+        />
+        <Stack.Screen
+          name="about"
+          options={{
+            title: "About",
+            headerRight: () => <ThemeToggle />,
+          }}
+        />
+      </Stack>
+    </>
   );
 }
 
